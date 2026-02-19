@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="IDFCFastTagApi" namespace="IDFCFastTagApi.Entities">
+  <class name="FastagTransaction" table="FastagTransaction">
+    <id name="Id" column="Id">
+      <generator class="identity" />
+    </id>
+
+    <many-to-one name="PushBatch" column="PushBatchId" not-null="true" />
+
+    <property name="TxnDt" column="TxnDt" length="50" />
+    <property name="ProcessingDt" column="ProcessingDt" length="50" />
+    <property name="TxnNo" column="TxnNo" length="50" unique="true" not-null="true" />
+    <property name="ClientTxnId" column="ClientTxnId" length="50" />
+    <property name="PlazaId" column="PlazaId" length="50" />
+    <property name="TxnType" column="TxnType" length="5" />
+    <property name="TagId" column="TagId" length="50" />
+    <property name="CreditAmt" column="CreditAmt" length="50" />
+    <property name="DebitAmt" column="DebitAmt" length="50" />
+    <property name="Balance" column="Balance" length="50" />
+    <property name="TxnDetails" column="TxnDetails" length="500" />
+    <property name="OrgTxnId" column="OrgTxnId" length="50" />
+    <property name="ReasonCodeDA" column="ReasonCodeDA" length="100" />
+    <property name="LaneDirection" column="LaneDirection" length="10" />
+    <property name="CreatedOn" column="CreatedOn" />
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="IDFCFastTagApi" namespace="IDFCFastTagApi.Entities">
+  <class name="ApiLog" table="ApiLog">
+    <id name="Id" column="Id">
+      <generator class="identity" />
+    </id>
+    <property name="ReqId" column="ReqId" length="50" />
+    <property name="RawRequestXml" column="RawRequestXml" type="StringClob" />
+    <property name="RawResponseXml" column="RawResponseXml" type="StringClob" />
+    <property name="Status" column="Status" length="20" />
+    <property name="ErrorMessage" column="ErrorMessage" length="1000" />
+    <property name="CreatedOn" column="CreatedOn" />
+  </class>
+</hibernate-mapping>

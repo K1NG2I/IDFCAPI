@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="IDFCFastTagApi" namespace="IDFCFastTagApi.Entities">
+  <class name="PushBatch" table="PushBatch">
+    <id name="Id" column="Id">
+      <generator class="identity" />
+    </id>
+    <property name="ReqId" column="ReqId" length="50" not-null="true" />
+    <property name="EntityId" column="EntityId" length="50" />
+    <property name="FromDate" column="FromDate" length="50" />
+    <property name="ToDate" column="ToDate" length="50" />
+    <property name="TxnCount" column="TxnCount" />
+    <property name="Token" column="Token" length="200" />
+    <property name="ResCode" column="ResCode" length="20" />
+    <property name="ResMsg" column="ResMsg" length="200" />
+    <property name="CreatedOn" column="CreatedOn" />
+
+    <bag name="Transactions" inverse="true" cascade="all">
+      <key column="PushBatchId" />
+      <one-to-many class="FastagTransaction" />
+    </bag>
+  </class>
+</hibernate-mapping>
