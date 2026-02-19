@@ -226,3 +226,14 @@ curl -k -X POST \"https://localhost:<port>/api/fastag/push\" \\
   -H \"Content-Type: application/xml\" \\
   --data-binary @sample.xml
 ```
+
+Postman steps:
+
+1. Method: `POST`
+2. URL: `https://localhost:<port>/api/fastag/push`
+3. Headers:
+   - `Content-Type: application/xml`
+4. Body:
+   - Select `raw`
+   - Choose `XML`
+   - Paste any of the sample XML payloads above
