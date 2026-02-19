@@ -137,3 +137,92 @@ Restore packages on Windows/Visual Studio:
 
 - Designed for IIS hosting on Windows with HTTPS.
 - Project targets .NET Framework 4.7.
+
+## How To Run
+
+Recommended (Windows/Visual Studio):
+
+1. Open `IDFCFastTagApi/IDFCFastTagApi.sln` in Visual Studio.
+2. Restore NuGet packages.
+3. Set `IDFCFastTagApi` as startup project.
+4. Press `F5` to run under IIS Express.
+5. Use the endpoint: `https://localhost:<port>/api/fastag/push`.
+
+## Test With Fake XML
+
+Use the sample XML below and send it with any HTTP client (Postman/curl).
+
+Normal push sample:
+
+```xml
+<txnXML>
+  <head>
+    <token>TESTTOKEN123</token>
+    <resCode>700</resCode>
+    <resMsg>Success</resMsg>
+    <reqId>REQ1234567890</reqId>
+    <entityId>62497</entityId>
+    <fromDate>01/05/2020 16:07:00</fromDate>
+    <toDate>01/05/2020 16:16:00</toDate>
+    <txnCount>1</txnCount>
+  </head>
+  <txns>
+    <txn>
+      <txnDt>01/05/2020 16:04:53</txnDt>
+      <processingDt>01/05/2020 16:07:48</processingDt>
+      <txnNo>0010002505011605330635</txnNo>
+      <clientTxnID>N/A</clientTxnID>
+      <plazaId>154002</plazaId>
+      <txnType>D</txnType>
+      <tagId>34161FA820328EE829483EE0</tagId>
+      <creditAmt>0</creditAmt>
+      <debitAmt>415</debitAmt>
+      <balance>-316</balance>
+      <txnDetails>Issuer Debit Transaction for toll fare - 154002 - Ghagghar Toll Plaza</txnDetails>
+      <org_txn_id>0010002505011605330635</org_txn_id>
+      <reasonCodeDA>NA</reasonCodeDA>
+      <laneDirection>N</laneDirection>
+    </txn>
+  </txns>
+</txnXML>
+```
+
+Chargeback sample:
+
+```xml
+<txnXML>
+  <head>
+    <token>TESTTOKEN123</token>
+    <resCode>700</resCode>
+    <resMsg>Success</resMsg>
+    <reqId>REQ1234567890</reqId>
+    <entityId>62497</entityId>
+    <fromDate>01/05/2020 16:07:00</fromDate>
+    <toDate>01/05/2020 16:16:00</toDate>
+    <txnCount>1</txnCount>
+  </head>
+  <txn>
+    <processingDt>05/05/2025 18:50:40</processingDt>
+    <txnNo>952505051849283513</txnNo>
+    <clientTxnID>N/A</clientTxnID>
+    <plazaId>536003</plazaId>
+    <txnType>C</txnType>
+    <tagId>34161FA820328EE81C9A5240</tagId>
+    <creditAmt>105</creditAmt>
+    <debitAmt>0</debitAmt>
+    <balance>473</balance>
+    <txnDetails>Chargeback Acceptance - 536003 - Gaman Bariyanamuvada</txnDetails>
+    <org_txn_id>17421470868680</org_txn_id>
+    <reasonCodeDA>470-CHARGEBACK ACCEPTANCE</reasonCodeDA>
+    <laneDirection>NA</laneDirection>
+  </txn>
+</txnXML>
+```
+
+Example curl:
+
+```bash
+curl -k -X POST \"https://localhost:<port>/api/fastag/push\" \\
+  -H \"Content-Type: application/xml\" \\
+  --data-binary @sample.xml
+```
