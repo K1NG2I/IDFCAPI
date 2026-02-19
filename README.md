@@ -125,6 +125,7 @@ Chargeback response:
 
 - Update DB connection in `IDFCFastTagApi/IDFCFastTagApi/Web.config` under `connectionStrings`.
 - NHibernate configuration is in `IDFCFastTagApi/IDFCFastTagApi/App_Data/hibernate.cfg.xml`.
+- To bypass database writes (for testing), set `EnableDbWrites=false` in `IDFCFastTagApi/IDFCFastTagApi/Web.config`.
 
 ## NuGet Packages
 

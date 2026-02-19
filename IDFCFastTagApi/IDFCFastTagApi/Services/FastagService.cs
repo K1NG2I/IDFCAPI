@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace IDFCFastTagApi.Services
     {
         public string ProcessPush(string rawXml)
         {
-            var apiLogId = SaveInitialLog(rawXml);
+            var enableDbWrites = IsDbWriteEnabled();
 
             PushRequestDto request;
             try
@@ -26,7 +27,11 @@ namespace IDFCFastTagApi.Services
             catch (Exception ex)
             {
                 var responseXml = BuildNormalResponseXml();
-                UpdateLog(apiLogId, null, responseXml, "FAILED", ex.Message);
+                if (enableDbWrites)
+                {
+                    var apiLogId = SaveInitialLog(rawXml);
+                    UpdateLog(apiLogId, null, responseXml, "FAILED", ex.Message);
+                }
                 return responseXml;
             }
 
@@ -34,17 +39,32 @@ namespace IDFCFastTagApi.Services
             var responseXmlFinal = responseIsChargeback ? BuildChargebackResponseXml() : BuildNormalResponseXml();
             var reqId = request.Head != null ? request.Head.ReqId : null;
 
-            try
+            if (enableDbWrites)
             {
-                PersistRequest(request);
-                UpdateLog(apiLogId, reqId, responseXmlFinal, "SUCCESS", null);
-            }
-            catch (Exception ex)
-            {
-                UpdateLog(apiLogId, reqId, responseXmlFinal, "FAILED", ex.Message);
+                var apiLogId = SaveInitialLog(rawXml);
+                try
+                {
+                    PersistRequest(request);
+                    UpdateLog(apiLogId, reqId, responseXmlFinal, "SUCCESS", null);
+                }
+                catch (Exception ex)
+                {
+                    UpdateLog(apiLogId, reqId, responseXmlFinal, "FAILED", ex.Message);
+                }
             }
 
             return responseXmlFinal;
+        }
+
+        private static bool IsDbWriteEnabled()
+        {
+            var setting = ConfigurationManager.AppSettings["EnableDbWrites"];
+            bool enabled;
+            if (bool.TryParse(setting, out enabled))
+            {
+                return enabled;
+            }
+            return true;
         }
 
         private static int SaveInitialLog(string rawXml)
