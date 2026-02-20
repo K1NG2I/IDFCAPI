@@ -7,7 +7,6 @@ using IDFCFastTagApi.Services;
 
 namespace IDFCFastTagApi.Controllers
 {
-    [RoutePrefix("api/fastag")]
     public class FastagController : ApiController
     {
         private readonly IFastagService _service;
@@ -18,7 +17,6 @@ namespace IDFCFastTagApi.Controllers
         }
 
         [HttpPost]
-        [Route("push")]
         public async Task<HttpResponseMessage> Push()
         {
             var rawXml = await Request.Content.ReadAsStringAsync();
