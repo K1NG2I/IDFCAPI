@@ -10,19 +10,51 @@ using IDFCFastTagApi.DTOs;
 using IDFCFastTagApi.Entities;
 using IDFCFastTagApi.Infrastructure;
 using NHibernate;
+using RSuite.Infrastructure.Core.Base;
+using RSuite.Domain.Transport.Master.Fleet;
+using RSuite.Domain.Transport.Transaction.Fasttag;
+using RSuite.Domain.Transport.Master.Domestic;
+using System.Collections;
+using RSuite.Infrastructure.Specification.Transport.Transaction.Fasttag;
+using RSuite.Infrastructure.Specification.Common.Login;
+using RSuite.Infrastructure.Core.Context;
+using RSuite.UserInterface.Web.Mvc.AppCode.Common.Factory;
+using System.Web;
 
 namespace IDFCFastTagApi.Services
 {
     public class FastagService : IFastagService
     {
+
+        IQueryExecutor _queryExecutor;
+        IFastTagLogRepository _fastTagLogRepository;
+
+
+        public FastagService(IQueryExecutor queryExecutor, IFastTagLogRepository fastTagLogRepository)
+        {
+            _queryExecutor =queryExecutor;
+            _fastTagLogRepository = fastTagLogRepository;
+        }
+
         public string ProcessPush(string rawXml)
         {
+
             var enableDbWrites = IsDbWriteEnabled();
 
             PushRequestDto request;
             try
             {
                 request = DeserializeRequest(rawXml);
+
+                var transactions = request.GetAllTransactions();
+
+                foreach (var txn in transactions)
+                {
+                    var fastTagLog = MapToFastTagLog(txn);
+              
+                    _fastTagLogRepository.SaveFastTagLog(0, 0, Convert.ToString(DateTime.Now), fastTagLog);
+                }
+
             }
             catch (Exception ex)
             {
@@ -56,6 +88,48 @@ namespace IDFCFastTagApi.Services
             return responseXmlFinal;
         }
 
+   
+
+        private FastTagLog MapToFastTagLog(PushTxnDto txn)
+        {
+            Vehicle vehicle = GetVehicleInformation(txn.TagId);
+            return new FastTagLog
+            {
+                ProcessingDateTime = Convert.ToDateTime(txn.ProcessingDt),
+                TransactionDateTime = Convert.ToDateTime(txn.TxnDt),
+                FastTagTransactionId = txn.TxnNo,
+                HexTagId = txn.TagId,
+                VehicleId = vehicle.VehicleId,
+                VehicleNo = vehicle.VehicleNo != null ? vehicle.VehicleNo : "",
+                PlazaCode = txn.PlazaId,
+                TransactionReferenceNo = txn.TxnNo,
+                TransactionStatus = txn.TxnType,
+                LaneCode = txn.LaneDirection,
+                AdditionalKey = txn.OrgTxnId,
+                AdditionalInfo1 = txn.ReasonCodeDA,
+                TransactionAmount = Convert.ToDecimal(txn.TxnType == "D"
+                    ? txn.DebitAmt
+                    : txn.CreditAmt),
+                PlazaName = ExtractPlazaName(txn.TxnDetails)
+            };
+        }
+
+        private string ExtractPlazaName(string txnDetails)
+        {
+            if (string.IsNullOrWhiteSpace(txnDetails))
+                return null;
+
+            txnDetails = txnDetails.Trim().TrimEnd('<');
+
+            var lastDashIndex = txnDetails.LastIndexOf('-');
+
+            if (lastDashIndex == -1)
+                return null;
+
+            return txnDetails.Substring(lastDashIndex + 1).Trim();
+        }
+
+
         private static bool IsDbWriteEnabled()
         {
             var setting = ConfigurationManager.AppSettings["EnableDbWrites"];
@@ -65,6 +139,18 @@ namespace IDFCFastTagApi.Services
                 return enabled;
             }
             return true;
+        }
+
+        private Vehicle GetVehicleInformation(string tagId)
+        {
+          
+
+            string query = @"select veh from Vehicle veh where vehicleid = (select dca.VehicleId from DigiCardAllocation dca where DigiCardId= (select dc.DigiCardId from DigiCard dc where DigiCardNo = '34161FA820328EE837C03D80')) ";
+
+            Vehicle vehicle = _queryExecutor.ExecuteDynamicQuery<Vehicle>(query, 0, 0).FirstOrDefault() ?? new Vehicle();
+
+
+            return vehicle;
         }
 
         private static int SaveInitialLog(string rawXml)

@@ -32,7 +32,7 @@ namespace IDFCFastTagApi.Infrastructure
 
         private static ISessionFactory BuildSessionFactory()
         {
-            var cfg = new Configuration();
+            var cfg = new NHibernate.Cfg.Configuration();
 
             string configPath;
             if (HttpContext.Current != null)

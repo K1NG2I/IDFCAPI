@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -15,6 +15,14 @@
     <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>15.0</OldToolsVersion>
+    <Use64BitIISExpress />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,26 +40,205 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Asset, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Domain.Asset.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Common">
+      <HintPath>bin RLOGIC\RSuite.Domain.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Excise, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Domain.Excise.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Finance">
+      <HintPath>bin RLOGIC\RSuite.Domain.Finance.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Fleet, Version=1.0.25.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Domain.Fleet.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Inventory, Version=1.3.10.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Domain.Inventory.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Mapping">
+      <HintPath>bin RLOGIC\RSuite.Domain.Mapping.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Payroll, Version=1.0.6274.26414, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Domain.Payroll.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Production, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Domain.Production.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Purchase, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Domain.Purchase.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Sales, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Domain.Sales.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Service">
+      <HintPath>bin RLOGIC\RSuite.Domain.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Domain.Transport">
+      <HintPath>bin RLOGIC\RSuite.Domain.Transport.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.EWayBill.Service, Version=1.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.EWayBill.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Core">
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.NHibernate, Version=2.1.31.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Asset, Version=1.0.6939.38315, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Asset.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Common">
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Excise, Version=1.0.6274.26419, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Excise.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Finance">
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Finance.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Fleet">
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Fleet.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Inventory">
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Inventory.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Payroll, Version=1.0.6274.26419, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Payroll.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Production">
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Production.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Purchase, Version=1.0.8063.24802, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Purchase.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Sales">
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Sales.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Service, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Infrastructure.Specification.Transport">
+      <HintPath>bin RLOGIC\RSuite.Infrastructure.Specification.Transport.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Repository.Asset, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Repository.Asset.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Repository.Common">
+      <HintPath>bin RLOGIC\RSuite.Repository.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Repository.Excise, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Repository.Excise.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Repository.Finance, Version=1.9.100.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Repository.Finance.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Repository.Fleet">
+      <HintPath>bin RLOGIC\RSuite.Repository.Fleet.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Repository.Inventory, Version=2.5.46.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Repository.Inventory.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Repository.Payroll, Version=1.0.6274.26419, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Repository.Payroll.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Repository.Production, Version=1.5.17.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Repository.Production.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Repository.Purchase, Version=1.3.4.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Repository.Purchase.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Repository.Sales, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Repository.Sales.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Repository.Transport, Version=2.11.252.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Repository.Transport.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Service, Version=1.1.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuite.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.UserInterface.Web.Mvc">
+      <HintPath>bin RLOGIC\RSuite.UserInterface.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuite.Web">
+      <HintPath>bin RLOGIC\RSuite.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="RSuiteAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin RLOGIC\RSuiteAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.6.1.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.2.6.1.0\lib\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <HintPath>..\\packages\\Microsoft.AspNet.WebApi.Core.5.2.7\\lib\\net45\\System.Web.Http.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.9\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <HintPath>..\\packages\\Microsoft.AspNet.WebApi.WebHost.5.2.7\\lib\\net45\\System.Web.Http.WebHost.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.9\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="NHibernate">
-      <HintPath>..\\packages\\NHibernate.3.3.3.4000\\lib\\Net45\\NHibernate.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -67,8 +254,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FastagService.cs" />
     <Compile Include="Services\IFastagService.cs" />
+    <Compile Include="Services\StructureMapDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DbConnection.xml" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <None Include="App_Data\hibernate.cfg.xml" />
@@ -78,7 +267,26 @@
     <EmbeddedResource Include="Mappings\PushBatch.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data" />
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v17.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:62410/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

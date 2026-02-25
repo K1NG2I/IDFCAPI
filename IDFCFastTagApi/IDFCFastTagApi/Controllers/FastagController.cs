@@ -4,6 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using IDFCFastTagApi.Services;
+using RSuite.Infrastructure.Core.Context;
+using RSuite.UserInterface.Web.Mvc.AppCode.Common.Factory;
 
 namespace IDFCFastTagApi.Controllers
 {
@@ -13,12 +15,18 @@ namespace IDFCFastTagApi.Controllers
 
         public FastagController()
         {
-            _service = new FastagService();
+            _service = EntityFactory.GetInstance<IFastagService>();
         }
+        private void SetLoginContextService()
+        {
 
+            ILoginContextService _loginContextService = EntityFactory.GetInstance<ILoginContextService>();
+            _loginContextService.SetLoginContext(1, "riddhi", 1, 26, 1);
+        }
         [HttpPost]
         public async Task<HttpResponseMessage> Push()
         {
+            SetLoginContextService();
             var rawXml = await Request.Content.ReadAsStringAsync();
             var responseXml = _service.ProcessPush(rawXml);
 

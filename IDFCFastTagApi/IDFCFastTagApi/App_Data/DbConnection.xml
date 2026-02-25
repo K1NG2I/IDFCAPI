@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+
+  <Connection>
+    <CompanyCode>IGINT</CompanyCode>
+    <ConnectionString>Server=103.30.74.236; Port=3306; Database=rlogic9igint; Uid=igintapp; Pwd=(Igintapp9);SslMode=none;</ConnectionString>
+    <CompanyLogo>/Rlogicigint/Images/IGLogo.png</CompanyLogo>
+    <CompanyReport>https://r-logic9.com/RLogicigintReport/Login</CompanyReport>
+    <DbType>MySQL</DbType>
+  </Connection>
+
+</root>
