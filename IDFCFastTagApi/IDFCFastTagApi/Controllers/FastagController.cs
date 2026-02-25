@@ -1,15 +1,14 @@
-using System.Net;
-using System.Net.Http;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Http;
+using System.Web.Mvc;
 using IDFCFastTagApi.Services;
 using RSuite.Infrastructure.Core.Context;
 using RSuite.UserInterface.Web.Mvc.AppCode.Common.Factory;
 
 namespace IDFCFastTagApi.Controllers
 {
-    public class FastagController : ApiController
+    public class FastagController : Controller
     {
         private readonly IFastagService _service;
 
@@ -24,18 +23,20 @@ namespace IDFCFastTagApi.Controllers
             _loginContextService.SetLoginContext(1, "riddhi", 1, 26, 1);
         }
         [HttpPost]
-        public async Task<HttpResponseMessage> Push()
+        public async Task<ActionResult> Push()
         {
             SetLoginContextService();
-            var rawXml = await Request.Content.ReadAsStringAsync();
+
+            Request.InputStream.Position = 0;
+            string rawXml;
+            using (var reader = new StreamReader(Request.InputStream, Encoding.UTF8))
+            {
+                rawXml = await reader.ReadToEndAsync();
+            }
+
             var responseXml = _service.ProcessPush(rawXml);
 
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(responseXml, Encoding.UTF8, "application/xml")
-            };
-
-            return response;
+            return Content(responseXml, "application/xml", Encoding.UTF8);
         }
     }
 }

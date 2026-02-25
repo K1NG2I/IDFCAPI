@@ -1,6 +1,7 @@
 using System;
 using System.Web;
-using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Routing;
 using RSuite.Infrastructure.Core.Base;
 using RSuite.Infrastructure.Core.Messaging;
 using RSuite.Infrastructure.Core.Logger;
@@ -15,21 +16,17 @@ namespace IDFCFastTagApi
     {
         protected void Application_Start()
         {
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-
             // Initialize full container
             MvcBootstrapper.Init();
+
+            // Register MVC routes (including api/{controller}/{action})
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             // IMPORTANT: register service immediately AFTER Init
             StructureMap.ObjectFactory.Container.Configure(cfg =>
             {
                 cfg.For<IFastagService>().Use<FastagService>();
             });
-
-            GlobalConfiguration.Configuration.DependencyResolver =
-                new StructureMapDependencyResolver(
-                    StructureMap.ObjectFactory.Container
-                );
         }
 
         protected void Application_PostAuthorizeRequest()
